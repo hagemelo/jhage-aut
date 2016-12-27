@@ -53,7 +53,6 @@ public class User implements JhageEntidade<User>, Principal{
 	
 	private String password;
 	
-	@Column(unique=true)
 	private String email;
 	
 	private Date created;

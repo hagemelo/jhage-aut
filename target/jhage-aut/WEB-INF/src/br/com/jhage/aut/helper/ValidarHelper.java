@@ -18,7 +18,7 @@ public final  class ValidarHelper{
 
 	public static boolean naoENuloENaoEVazio(final String... object) {
 		
-		boolean result = false;
+		boolean result = true;
 		if (ValidarHelper.enulo(object)) {
 			result = false;
 		} else {

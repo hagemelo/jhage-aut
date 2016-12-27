@@ -18,8 +18,8 @@ public enum AutExceptionCode {
 	ERRO_AO_ValidarHelper_STRING_SE_CONTEM_APENAS_NUMEROS("Erro ao Validar String se Contem Apenas Numeros"),
 	EMAIL_JA_EXISTENTE("E-mail já existente"),
 	USER_SENHA_INVALIDO("Usuário e/ou senha inválidos"),
-	USER_NAO_AUTORIZADO("Usuário nâo autorizado");
-	
+	USER_NAO_AUTORIZADO("Usuário nâo autorizado"),
+	SESSAO_INVALIDA("Sessão inválida");
 
 	private final String value;
 

@@ -9,8 +9,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TransactionRequiredException;
 
-import br.com.jhage.aut.excecao.AutException;
-import br.com.jhage.aut.excecao.AutExceptionCode;
 import br.com.jhage.aut.modelo.JhageEntidade;
 
 public abstract class BaseDao<E extends JhageEntidade<E>>{
@@ -32,21 +30,11 @@ public abstract class BaseDao<E extends JhageEntidade<E>>{
 		this.getEntityManager().flush();
 	}
 	
-	public E salvarRetornar(final E object) throws AutException {
+	public E salvarRetornar(final E object) throws EntityExistsException, PersistenceException, IllegalStateException {
 
-		try {
-			E e = this.getEntityManager().merge(object);
-			this.getEntityManager().flush();
-			return e;
-		}catch(PersistenceException| IllegalStateException e ){
-			
-			if (e.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
-				this.getEntityManager().getTransaction().rollback();
-				throw new AutException(AutExceptionCode.EMAIL_JA_EXISTENTE);
-			}else{
-				throw new AutException(AutExceptionCode.ERRRO_ACAO_ABRUPTA);
-			}
-		}
+		E e = this.getEntityManager().merge(object);
+		this.getEntityManager().flush();
+		return e;
 		
 	}
 

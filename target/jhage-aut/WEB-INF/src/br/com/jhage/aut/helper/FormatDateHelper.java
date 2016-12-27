@@ -1,7 +1,9 @@
 package br.com.jhage.aut.helper;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import br.com.jhage.aut.excecao.AutException;
@@ -35,9 +37,19 @@ final public class FormatDateHelper {
 
 	public static boolean isMesmadata(final Date date1, final Date date2) throws AutException {
 
-		final Date primeiraData = FormatDateHelper.formatarDataParaPadrao(date1, "dd/MM/yyyy");
-		final Date segundaData = FormatDateHelper.formatarDataParaPadrao(date2, "dd/MM/yyyy");
+		final Date primeiraData = FormatDateHelper.formatarDataParaPadrao(date1, "dd/MM/yyyy hh:mm:ss");
+		final Date segundaData = FormatDateHelper.formatarDataParaPadrao(date2, "dd/MM/yyyy hh:mm:ss");
 		return primeiraData.compareTo(segundaData) == 0;
+	}
+	
+	public static boolean isData1MenorQueData2(final Date date1, final Date date2)
+			throws AutException {
+
+		final Date primeiraData = FormatDateHelper
+				.formatarDataParaPadrao(date1, "dd/MM/yyyy hh:mm:ss");
+		final Date segundaData = FormatDateHelper
+				.formatarDataParaPadrao(date2, "dd/MM/yyyy hh:mm:ss");
+		return primeiraData.compareTo(segundaData) <= 0;
 	}
 
 	public static Date formatarDataParaPadrao(final String date, final String value) throws AutException {
@@ -53,7 +65,7 @@ final public class FormatDateHelper {
 	public static Date formatarDataParaPadrao(final Date date, final String value) throws AutException {
 
 		try {
-			FormatDateHelper.inserirFormatoPadraoDaData("dd/MM/yyyy");
+			FormatDateHelper.inserirFormatoPadraoDaData(value);
 			return FormatDateHelper.formatoPadraoDaData.parse(FormatDateHelper.formatoPadraoDaData.format(date));
 		} catch (final Exception e) {
 			throw new AutException(e, AutExceptionCode.ERRO_AO_FORMATAR_DATA_PARA_PADRAO);
@@ -64,4 +76,19 @@ final public class FormatDateHelper {
 		FormatDateHelper.formatoPadraoDaData = new SimpleDateFormat(formato, new Locale("pt", "BR"));
 	}
 
+	
+	public static Date acrescenterMinutos(final Date date, final int valor)
+			throws AutException {
+
+		try {
+			GregorianCalendar gc = new GregorianCalendar();
+		    gc.setTime(date);
+		    gc.add(Calendar.MINUTE,valor);
+		    return gc.getTime();
+			
+		} catch (final Exception e) {
+			throw new AutException(e,
+					AutExceptionCode.ERRRO_ACAO_ABRUPTA);
+		}
+	}
 }
